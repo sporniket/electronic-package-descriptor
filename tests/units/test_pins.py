@@ -1,4 +1,4 @@
-from electronic_package_descriptor.pins import *
+from electronic_package_descriptor import *
 import pytest
 
 def test_PinDesignator():
