@@ -14,7 +14,7 @@ python3 -m pip install --upgrade twine
 
 ```shell
 python3 -m build
-python3 -m pip install dist/xxx.whl
+python3 -m pip install --force-reinstall dist/xxx.whl
 ```
 
 Run test suites with :
