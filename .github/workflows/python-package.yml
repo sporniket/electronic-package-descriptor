@@ -39,4 +39,4 @@ jobs:
       run: |
         pwd
         echo $PYTHONPATH
-        pytest
+        PYTHONPATH="$(pwd)/src" pytest
