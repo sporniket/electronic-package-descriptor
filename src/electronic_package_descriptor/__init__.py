@@ -21,5 +21,5 @@ from .pins import *
 
 __all__ = [
     'TypeOfPin', 'TypeOfPinDesignator', 'DirectionnalityOfPin', 'PolarityOfPairElement',
-    'PinDesignator','PinDimensions','PinDescription'
+    'PinDesignator','PinDimensions','PinDescription','ElementOfPair','ElementOfBus'
 ]

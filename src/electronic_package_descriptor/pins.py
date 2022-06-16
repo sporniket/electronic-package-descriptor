@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License along with Ele
 If not, see <https://www.gnu.org/licenses/>. 
 ---
 """
-from enum import Enum
+from enum import Enum, IntEnum
 import re
 
 class TypeOfPin(Enum):
@@ -39,14 +39,14 @@ class TypeOfPin(Enum):
     BIDIRECTIONNAL_TRISTATE = 'B3'
     BIDIRECTIONNAL = 'B'
 
-class TypeOfPinDesignator(Enum):
+class TypeOfPinDesignator(IntEnum):
     """
     Enumerate the type of designator for a pin, a single number of dip/lcc/sop etc... ; a letter + number for PGA/BGA/...
     """
     NUMBER = 0 # e.g. '1', '2',...
     LETTER_NUMBER = 1 # e.g. 'A1', 'A2',... the letter is the row, the number is the column
 
-class DirectionnalityOfPin(Enum):
+class DirectionnalityOfPin(IntEnum):
     """
     A connected pin is either Input, Output, or Bidirectionnal.
 
@@ -56,7 +56,7 @@ class DirectionnalityOfPin(Enum):
     OUT = 1000
     BI = 2000
 
-class PolarityOfPairElement(Enum):
+class PolarityOfPairElement(IntEnum):
     """
     A differential has one 'plus' element and one 'minus' element.
 
@@ -96,15 +96,45 @@ class PinDimensions:
         self.thickness = 1
         self.spanning = len(name)
 
+class ElementOfPair:
+    @staticmethod
+    def of(name:str):
+        if name.endswith('P') or name.endswith('+'):
+            return ElementOfPair(PolarityOfPairElement.PLUS, name[:-1])
+        if name.endswith('M') or name.endswith('-'):
+            return ElementOfPair(PolarityOfPairElement.MINUS, name[:-1])
+        return None
+
+    def __init__(self, polarity:PolarityOfPairElement, prefix:str):
+        self.polarity = polarity
+        self.rank = int(polarity)
+        self.prefix = prefix
+
+class ElementOfBus:
+    @staticmethod
+    def of(name:str):
+        m = re.search('\d+([.]\d+)?$', name)
+        if m == None:
+            return None
+        if m.start() == 0:
+            return None
+        return ElementOfBus(float(name[m.start():]), name[:m.start()])
+
+    def __init__(self, rank:float, prefix:str):
+        self.rank = rank
+        self.prefix = prefix
+
 class PinDescription:
     def __init__(self, designator:str, name:str, type:str, description:str):
         self.type = TypeOfPin(type)
         self.designator = PinDesignator(designator)
-        self.name = name 
-        self.bus = None # TODO detect probable bus.
-        self.pair = None # TODO detect probable differential pair
+        self.name = name.upper()
+        self.bus = ElementOfBus.of(self.name)
+        self.pair = ElementOfPair.of(self.name)
         self.description = description
         self.dimensions = PinDimensions(name)
+
+
 
 # debug program
 if __name__ == '__main__':
@@ -132,9 +162,15 @@ if __name__ == '__main__':
             print(f"debugPinDescription({designator},{name},{type},{description})")
             pds = PinDescription(designator, name, type, description)
             print(f"    ==> {vars(pds)}")
-            print(f"    ==> {vars(pds.designator)}")
-            print(f"    ==> {vars(pds.dimensions)}")
+            if pds.pair != None:
+                print(f"    ==>       pair : {vars(pds.pair)}")
+            if pds.bus != None:
+                print(f"    ==>        bus : {vars(pds.bus)}")
+            print(f"    ==> designator : {vars(pds.designator)}")
+            print(f"    ==> dimensions : {vars(pds.dimensions)}")
         except ValueError as err:
             print(f"    ==> {err}")
     debugPinDescription('32','DTACK','O','DaTa ACKnowledge')
+    debugPinDescription('D10','A23','O','Address bus')
+    debugPinDescription('D10','D+','O','Data +')
     debugPinDescription('D10','DTACK','WTV','DaTa ACKnowledge')

@@ -1,0 +1,6 @@
+#!/bin/bash
+# clean
+rm dist/*
+rm -Rf .pytest_cache
+# rebuild, install and test
+python3 -m build && python3 -m pip install --force-reinstall dist/*.whl && python3 -m pytest
