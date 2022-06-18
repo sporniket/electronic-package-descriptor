@@ -18,8 +18,10 @@ If not, see <https://www.gnu.org/licenses/>. 
 ---
 """
 from .pins import *
+from .groups_of_pins import *
 
 __all__ = [
     'TypeOfPin', 'TypeOfPinDesignator', 'DirectionnalityOfPin', 'PolarityOfPairElement',
-    'PinDesignator','PinDimensions','PinDescription','ElementOfPair','ElementOfBus'
+    'PinDesignator','PinDimensions','PinDescription','ElementOfPair','ElementOfBus',
+    'PatternOfGroup','GroupOfPins'
 ]

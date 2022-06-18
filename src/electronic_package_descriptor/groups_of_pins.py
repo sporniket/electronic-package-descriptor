@@ -18,6 +18,8 @@ If not, see <https://www.gnu.org/licenses/>. 
 ---
 """
 from enum import Enum
+from typing import List
+from .pins import *
 
 def PatternOfGroup(Enum):
     """
@@ -28,3 +30,11 @@ def PatternOfGroup(Enum):
     AMPOP = 2 # Exactly one differential pair and one output
     POWER = 3 # A bunch of power inputs and grounds
     POWER_AMPOP = 4 # Exactly one differential pair of power input, and optionnal grounds
+
+
+class GroupOfPins:
+    def __init__(self,designator:str, rank:int, comment:str, pins:List[PinDescription]):
+        self.designator = designator
+        self.rank = rank
+        self.comment = comment
+        self.pins = pins
