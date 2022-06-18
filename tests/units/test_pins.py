@@ -29,6 +29,7 @@ def test_PinDimensions():
 def test_PinDescription():
     pds = PinDescription('C5','CLK','ICLK','Main clock')
     assert(pds.type == TypeOfPin.INPUT_CLOCK)
+    assert(pds.directionnality == DirectionnalityOfPin.IN)
     assert(pds.name == 'CLK')
     assert(pds.bus == None)
     assert(pds.pair == None)
@@ -63,3 +64,19 @@ def test_ElementOfBus():
     assert(e.prefix == 'D')
     e = ElementOfBus.of('whatever')
     assert(e == None)
+
+def test_DirectionnalityOfPin():
+    assert(PinDescription('C5','CLK','PWR','Main clock').directionnality == DirectionnalityOfPin.IN)
+    assert(PinDescription('C5','CLK','GND','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','DNC','Main clock').directionnality == None)
+    assert(PinDescription('C5','CLK','I','Main clock').directionnality == DirectionnalityOfPin.IN)
+    assert(PinDescription('C5','CLK','ICLK','Main clock').directionnality == DirectionnalityOfPin.IN)
+    assert(PinDescription('C5','CLK','O','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','OCLK','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','O3','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','OCOL','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','OEMT','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','OPSV','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','OPWR','Main clock').directionnality == DirectionnalityOfPin.OUT)
+    assert(PinDescription('C5','CLK','B3','Main clock').directionnality == DirectionnalityOfPin.BI)
+    assert(PinDescription('C5','CLK','B','Main clock').directionnality == DirectionnalityOfPin.BI)

@@ -56,6 +56,22 @@ class DirectionnalityOfPin(IntEnum):
     OUT = 1000
     BI = 2000
 
+_DIRECTIONNALITY_BY_TYPE = {
+    TypeOfPin.POWER:DirectionnalityOfPin.IN,
+    TypeOfPin.GROUND:DirectionnalityOfPin.OUT,
+    TypeOfPin.INPUT:DirectionnalityOfPin.IN,
+    TypeOfPin.INPUT_CLOCK:DirectionnalityOfPin.IN,
+    TypeOfPin.OUTPUT:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_CLOCK:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_TRISTATE:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_OPEN_COLLECTOR:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_OPEN_EMITTER:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_PASSIVE:DirectionnalityOfPin.OUT,
+    TypeOfPin.OUTPUT_POWER:DirectionnalityOfPin.OUT,
+    TypeOfPin.BIDIRECTIONNAL_TRISTATE:DirectionnalityOfPin.BI,
+    TypeOfPin.BIDIRECTIONNAL:DirectionnalityOfPin.BI
+}
+
 class PolarityOfPairElement(IntEnum):
     """
     A differential has one 'plus' element and one 'minus' element.
@@ -127,6 +143,7 @@ class ElementOfBus:
 class PinDescription:
     def __init__(self, designator:str, name:str, type:str, description:str):
         self.type = TypeOfPin(type)
+        self.directionnality = None if self.type == TypeOfPin.DO_NOT_CONNECT else _DIRECTIONNALITY_BY_TYPE[self.type]
         self.designator = PinDesignator(designator)
         self.name = name.upper()
         self.bus = ElementOfBus.of(self.name)
