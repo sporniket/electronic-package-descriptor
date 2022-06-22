@@ -78,6 +78,19 @@ def _checkPowerGroup(group):
         if p.type != TypeOfPin.POWER and p.type != TypeOfPin.GROUND: return False
     return True
 
+def _fillSlots(pins:List[PinDescription]):
+    slots = { 'in': [], 'out': [], 'bi': [], 'others':[]}
+    for p in pins:
+        if p.directionnality == DirectionnalityOfPin.IN:
+            slots['in'].append(p)
+        elif p.directionnality == DirectionnalityOfPin.OUT:
+            slots['out'].append(p)
+        elif p.directionnality == DirectionnalityOfPin.BI:
+            slots['bi'].append(p)
+        else:
+            slots['others'].append(p)
+    return {k:v for k,v in slots.items() if len(v) > 0}
+
 class GroupOfPins:
     def __init__(self,designator:str, rank:int, comment:str, pins:List[PinDescription]):
         self.designator = designator
@@ -85,6 +98,8 @@ class GroupOfPins:
         self.comment = comment
         self.pins = pins
         self.pattern = None
+        self.slots = _fillSlots(pins) # default shuffle
+
 
         # Pass 1 : scan the pins and regroup by bus or pair
         buses = {}
@@ -111,19 +126,23 @@ class GroupOfPins:
         if countOfBuses + countOfPairs > 0:
             if countOfBuses == 1 and countOfPairs == 0:
                 self.pattern = PatternOfGroup.BUS
+                self.slots['bus'] = sorted(self.pins, key=lambda p:p.bus.rank, reverse= True)
                 return
             elif countOfBuses == 0 and countOfPairs > 0:
                 if countOfPairs == 1:
                     thePair = pairs[next(iter(pairs))]
                     if len(self.pins) == len(thePair) and _checkPowerPair(thePair):
                         self.pattern = PatternOfGroup.AMPOP_VREF
+                        self.slots = {
+                            'in':sorted(thePair, key=lambda p : p.pair.rank)
+                        }
                         return
-                    elif len(self.pins) > len(thePair):
+                    elif len(self.pins) == len(thePair) + 1:
                         theOutput = _findFirstOutput(self.pins)
                         if theOutput != None and _checkInputPair(thePair):
                             self.pattern = PatternOfGroup.AMPOP_IO
                             self.slots = {
-                                'in':thePair,
+                                'in':sorted(thePair, key=lambda p : p.pair.rank),
                                 'out':[theOutput]
                             }
                             return
