@@ -19,7 +19,8 @@ If not, see <https://www.gnu.org/licenses/>. 
 """
 from enum import Enum
 from typing import List
-from .pins import *
+from .commons import Directionnality
+from .pins import PinDescription, PolarityOfPairElement, TypeOfPin
 
 class PatternOfGroup(Enum):
     """
@@ -51,7 +52,7 @@ def _checkPowerPair(group):
     Checks that the list of pins (that are element of the same pair) are only of type power.
     """
     for p in group:
-        if p.type != TypeOfPin.POWER: return false
+        if p.type != TypeOfPin.POWER: return False
     return True
 
 def _checkInputPair(group):
@@ -59,7 +60,7 @@ def _checkInputPair(group):
     Checks that the list of pins (that are element of the same pair) are only of type input.
     """
     for p in group:
-        if p.type != TypeOfPin.INPUT: return false
+        if p.type != TypeOfPin.INPUT: return False
     return True
 
 def _findFirstOutput(group):
@@ -67,7 +68,7 @@ def _findFirstOutput(group):
     Find the first pin having the OUT directionnality
     """
     for p in group:
-        if p.directionnality == DirectionnalityOfPin.OUT: return p
+        if p.directionnality == Directionnality.OUT: return p
     return None
 
 def _checkPowerGroup(group):
@@ -81,11 +82,11 @@ def _checkPowerGroup(group):
 def _fillSlots(pins:List[PinDescription]):
     slots = { 'in': [], 'out': [], 'bi': [], 'others':[]}
     for p in pins:
-        if p.directionnality == DirectionnalityOfPin.IN:
+        if p.directionnality == Directionnality.IN:
             slots['in'].append(p)
-        elif p.directionnality == DirectionnalityOfPin.OUT:
+        elif p.directionnality == Directionnality.OUT:
             slots['out'].append(p)
-        elif p.directionnality == DirectionnalityOfPin.BI:
+        elif p.directionnality == Directionnality.BI:
             slots['bi'].append(p)
         else:
             slots['others'].append(p)
@@ -99,7 +100,15 @@ class GroupOfPins:
         self.pins = pins
         self.pattern = None
         self.slots = _fillSlots(pins) # default shuffle
-
+        self.directionnality = None
+        if 'in' in self.slots:
+            if 'out' not in self.slots and 'bi' not in self.slots:
+                self.directionnality = Directionnality.IN
+            else:
+                self.directionnality = Directionnality.BI
+        else:
+            if 'out' in self.slots or 'bi' in self.slots:
+                self.directionnality = Directionnality.OUT
 
         # Pass 1 : scan the pins and regroup by bus or pair
         buses = {}

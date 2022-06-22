@@ -17,13 +17,16 @@ You should have received a copy of the GNU General Public License along with Ele
 If not, see <https://www.gnu.org/licenses/>. 
 ---
 """
-from .commons import *
-from .pins import *
-from .groups_of_pins import *
+from enum import IntEnum
 
-__all__ = [
-    'Directionnality',
-    'TypeOfPin', 'TypeOfPinDesignator',  'PolarityOfPairElement',
-    'PinDesignator','PinDimensions','PinDescription','ElementOfPair','ElementOfBus',
-    'PatternOfGroup','GroupOfPins'
-]
+class Directionnality(IntEnum):
+    """
+    For a connected pin, tells about how the signal is either an input, output, or bidirectionnal signal ; as a side
+    feature, one can add the int value to the rank to sort the pins grouped by directionnality.
+
+    For a group of pins, tells whether there are pins to render on the input side only, on the output side only, or both
+    sides.
+    """
+    IN = 0
+    OUT = 1000
+    BI = 2000

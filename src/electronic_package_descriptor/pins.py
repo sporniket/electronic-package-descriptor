@@ -19,6 +19,7 @@ If not, see <https://www.gnu.org/licenses/>. 
 """
 from enum import Enum, IntEnum
 import re
+from .commons import Directionnality
 
 class TypeOfPin(Enum):
     """
@@ -46,30 +47,20 @@ class TypeOfPinDesignator(IntEnum):
     NUMBER = 0 # e.g. '1', '2',...
     LETTER_NUMBER = 1 # e.g. 'A1', 'A2',... the letter is the row, the number is the column
 
-class DirectionnalityOfPin(IntEnum):
-    """
-    A connected pin is either Input, Output, or Bidirectionnal.
-
-    As a side feature, one can add the int value to the rank to sort the pins grouped by directionnality.
-    """
-    IN = 0
-    OUT = 1000
-    BI = 2000
-
 _DIRECTIONNALITY_BY_TYPE = {
-    TypeOfPin.POWER:DirectionnalityOfPin.IN,
-    TypeOfPin.GROUND:DirectionnalityOfPin.OUT,
-    TypeOfPin.INPUT:DirectionnalityOfPin.IN,
-    TypeOfPin.INPUT_CLOCK:DirectionnalityOfPin.IN,
-    TypeOfPin.OUTPUT:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_CLOCK:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_TRISTATE:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_OPEN_COLLECTOR:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_OPEN_EMITTER:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_PASSIVE:DirectionnalityOfPin.OUT,
-    TypeOfPin.OUTPUT_POWER:DirectionnalityOfPin.OUT,
-    TypeOfPin.BIDIRECTIONNAL_TRISTATE:DirectionnalityOfPin.BI,
-    TypeOfPin.BIDIRECTIONNAL:DirectionnalityOfPin.BI
+    TypeOfPin.POWER:Directionnality.IN,
+    TypeOfPin.GROUND:Directionnality.OUT,
+    TypeOfPin.INPUT:Directionnality.IN,
+    TypeOfPin.INPUT_CLOCK:Directionnality.IN,
+    TypeOfPin.OUTPUT:Directionnality.OUT,
+    TypeOfPin.OUTPUT_CLOCK:Directionnality.OUT,
+    TypeOfPin.OUTPUT_TRISTATE:Directionnality.OUT,
+    TypeOfPin.OUTPUT_OPEN_COLLECTOR:Directionnality.OUT,
+    TypeOfPin.OUTPUT_OPEN_EMITTER:Directionnality.OUT,
+    TypeOfPin.OUTPUT_PASSIVE:Directionnality.OUT,
+    TypeOfPin.OUTPUT_POWER:Directionnality.OUT,
+    TypeOfPin.BIDIRECTIONNAL_TRISTATE:Directionnality.BI,
+    TypeOfPin.BIDIRECTIONNAL:Directionnality.BI
 }
 
 class PolarityOfPairElement(IntEnum):
