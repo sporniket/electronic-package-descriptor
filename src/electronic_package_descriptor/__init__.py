@@ -20,10 +20,12 @@ If not, see <https://www.gnu.org/licenses/>. 
 from .commons import *
 from .pins import *
 from .groups_of_pins import *
+from .packages import *
 
 __all__ = [
     'Directionnality',
     'TypeOfPin', 'TypeOfPinDesignator',  'PolarityOfPairElement',
     'PinDesignator','PinDimensions','PinDescription','ElementOfPair','ElementOfBus',
-    'PatternOfGroup','GroupOfPins'
+    'PatternOfGroup','GroupOfPins',
+    'LayoutOfPins', 'PackageDescription'
 ]
