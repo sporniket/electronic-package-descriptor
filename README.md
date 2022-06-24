@@ -39,7 +39,7 @@ It relies on the following packages to build and test :
 * build
 * pytest
 
-see [README packaging](README-packaging.md) for further details.
+see [README packaging](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-packaging.md) for further details.
 
 > Do not use **Sporniket's electronic package descriptor** if this project is not suitable for your project.
 
