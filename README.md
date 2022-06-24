@@ -1,5 +1,9 @@
 # Sporniket's electronic package descriptor
 
+[![Latest version](https://img.shields.io/github/v/release/sporniket/electronic-package-descriptor?include_prereleases)](https://github.com/sporniket/electronic-package-descriptor/releases)
+[![Workflow status](https://img.shields.io/github/workflow/status/sporniket/electronic-package-descriptor/Python%20package)](https://github.com/sporniket/electronic-package-descriptor/actions/workflows/python-package.yml)
+[![Download status](https://img.shields.io/pypi/dm/electronic-package-descriptor-by-sporniket)](https://pypi.org/project/electronic-package-descriptor-by-sporniket/)
+
 > [WARNING] Please read carefully this note before using this project. It contains important facts.
 
 Content
