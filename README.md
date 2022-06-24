@@ -40,8 +40,13 @@ Content
 **Sporniket's electronic package descriptor** is written using python version 3.6, and should work with python version 3.7 up to 3.10.
 
 It relies on the following packages to build and test :
+
 * build
 * pytest
+
+It also relies on the following package to enforce source formatting :
+
+* black
 
 see [README packaging](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-packaging.md) for further details.
 

@@ -23,6 +23,7 @@ from .commons import Directionnality
 from .pins import PinDescription
 from .groups_of_pins import GroupOfPins
 
+
 class LayoutOfPins(Enum):
     """
     A list of supported pin layout rendering.
@@ -35,10 +36,12 @@ class LayoutOfPins(Enum):
     pins of the left side numbered 1 to 20 from top to bottom, and the pins of the right side numbered 40 downto 21 from
     top to bottom.
     """
-    DUAL_INLINE_PACKAGE = 'DIP'
-    BOARD_DUAL = 'BRD'
-    LEADED_CHIP_CARRIER = 'LCC'
-    QUAD_FLAT_PACKAGE = 'QFP'
+
+    DUAL_INLINE_PACKAGE = "DIP"
+    BOARD_DUAL = "BRD"
+    LEADED_CHIP_CARRIER = "LCC"
+    QUAD_FLAT_PACKAGE = "QFP"
+
 
 class PackageDescription:
     """
@@ -46,10 +49,18 @@ class PackageDescription:
 
     Default metadata assume a DIP integrated circuit (reference prefix is 'U') without alias nor footprint designator.
     """
+
     def __init__(
-            self,  name:str,  groupedPins:List[GroupOfPins],  ungroupedPins:List[PinDescription], *,
-            layoutOfPins:LayoutOfPins=LayoutOfPins.DUAL_INLINE_PACKAGE, prefix:str='U',
-            footprintDesignator:Optional[str]=None, aliases:Optional[List[str]]=None):
+        self,
+        name: str,
+        groupedPins: List[GroupOfPins],
+        ungroupedPins: List[PinDescription],
+        *,
+        layoutOfPins: LayoutOfPins = LayoutOfPins.DUAL_INLINE_PACKAGE,
+        prefix: str = "U",
+        footprintDesignator: Optional[str] = None,
+        aliases: Optional[List[str]] = None
+    ):
         self.name = name
         self.groupedPins = groupedPins
         self.ungroupedPins = ungroupedPins

@@ -8,11 +8,13 @@ _See https://packaging.python.org/en/latest/tutorials/packaging-projects/#genera
 python3 -m pip install --upgrade build
 pip3 install -U pytest
 python3 -m pip install --upgrade twine
+python3 -m pip install --upgrade black
 ```
 
 ## Build and install locally
 
 ```shell
+python3 -m black 
 python3 -m build
 python3 -m pip install --force-reinstall dist/xxx.whl
 ```

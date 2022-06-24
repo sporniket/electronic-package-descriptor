@@ -19,6 +19,7 @@ If not, see <https://www.gnu.org/licenses/>. 
 """
 from enum import IntEnum
 
+
 class Directionnality(IntEnum):
     """
     For a connected pin, tells about how the signal is either an input, output, or bidirectionnal signal ; as a side
@@ -27,6 +28,7 @@ class Directionnality(IntEnum):
     For a group of pins, tells whether there are pins to render on the input side only, on the output side only, or both
     sides.
     """
+
     IN = 0
     OUT = 1000
     BI = 2000
