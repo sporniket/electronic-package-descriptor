@@ -29,5 +29,6 @@ def test_default_values():
     assert len(p.ungroupedPins) == 0
     assert p.layoutOfPins == LayoutOfPins.DUAL_INLINE_PACKAGE
     assert p.prefix == "U"
+    assert p.datasheet == None
     assert p.footprintDesignator == None
     assert p.aliases == ()

@@ -110,6 +110,11 @@ class PinDesignator:
             self.column = self.name_number  # first item is 1
             self.rank = self.name_number
 
+    # A shortcut to get the full name of the designator
+    @property
+    def fullname(self) -> str:
+        return f"{self.name_letter}{self.name_number}"
+
 
 class PinDimensions:
     """

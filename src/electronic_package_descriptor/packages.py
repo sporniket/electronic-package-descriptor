@@ -58,6 +58,7 @@ class PackageDescription:
         *,
         layoutOfPins: LayoutOfPins = LayoutOfPins.DUAL_INLINE_PACKAGE,
         prefix: str = "U",
+        datasheet: str = None,
         footprintDesignator: Optional[str] = None,
         aliases: Optional[List[str]] = None
     ):
@@ -66,5 +67,6 @@ class PackageDescription:
         self.ungroupedPins = ungroupedPins
         self.layoutOfPins = layoutOfPins
         self.prefix = prefix
+        self.datasheet = datasheet
         self.footprintDesignator = footprintDesignator
         self.aliases = () if aliases == None else tuple(aliases)

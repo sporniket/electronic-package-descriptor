@@ -21,6 +21,7 @@ from .commons import *
 from .pins import *
 from .groups_of_pins import *
 from .packages import *
+from .serializer import *
 
 __all__ = [
     "Directionnality",
@@ -36,4 +37,5 @@ __all__ = [
     "GroupOfPins",
     "LayoutOfPins",
     "PackageDescription",
+    "SerializerOfPackage",
 ]
