@@ -66,7 +66,7 @@ def test_serializer():
     "reference": "U",
     "datasheet": null,
     "footprint": null,
-    "physical": "LayoutOfPins.DUAL_INLINE_PACKAGE"
+    "physical": "DIP"
   },
   "pins": [
     {

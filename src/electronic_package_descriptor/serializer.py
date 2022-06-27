@@ -67,7 +67,7 @@ class SerializerOfPackage:
                 "reference": package.prefix,
                 "datasheet": package.datasheet,
                 "footprint": package.footprintDesignator,
-                "physical": str(package.layoutOfPins),
+                "physical": package.layoutOfPins.value,
             },
             "pins": sorted(pins, key=lambda p: PinDesignator(p["designator"]).rank),
             "groups": sorted(groups, key=lambda g: g["rank"]),
