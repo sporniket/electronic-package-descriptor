@@ -87,5 +87,10 @@ See the [project issues](https://github.com/sporniket/electronic-package-descrip
 
 ## 5. Miscellanous
 
+Supplemental documentation :
+
+* [README packaging](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-packaging.md) : some technical details about packaging this project.
+* [README json](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-json.md) : the specification of the JSON-based format.
+
 ### Report issues
 Use the [project issues](https://github.com/sporniket/electronic-package-descriptor/issues) page.
