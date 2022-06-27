@@ -21,52 +21,23 @@ from electronic_package_descriptor import *
 import pytest
 import json
 
+def assert_that_group_is_as_expected(g:GroupOfPins, designator:str, rank:int, comment: str, pins: str):
+    assert g.designator == designator
+    assert g.rank == rank
+    assert g.comment == comment
+    pinsDesgns = " ".join([p.designator.fullname for p in g.pins])
+    assert pinsDesgns == pins
 
-def test_serializer():
-    p = PackageDescription(
-        "foo",
-        [
-            GroupOfPins(
-                "G1",
-                10,
-                "Group 1",
-                [
-                    PinDescription("1", "D+", "I", "Non inverting input"),
-                    PinDescription("2", "OUT", "O", "output"),
-                    PinDescription("3", "D-", "I", "Inverting input"),
-                ],
-            ),
-            GroupOfPins(
-                "G2",
-                20,
-                "Group 2",
-                [
-                    PinDescription("6", "D0", "I", "Data bus"),
-                    PinDescription("7", "D1", "O", "Data bus"),
-                    PinDescription("8", "D4", "B", "Data bus"),
-                    PinDescription("4", "D3", "I", "Data bus"),
-                    PinDescription("5", "D2", "I", "Data bus"),
-                ],
-            ),
-        ],
-        [
-            PinDescription("9", "VCC", "PWR", "Power supply"),
-            PinDescription("10", "VCC", "PWR", "Power supply"),
-            PinDescription("11", "GNDA", "GND", "Ground for analog part"),
-            PinDescription("12", "VCCA", "PWR", "Power input for analog part"),
-            PinDescription("13", "GND", "GND", "Ground"),
-        ],
-    )
-    assert (
-        SerializerOfPackage().jsonFrom(p)
-        == """{
+def test_deserializer():
+    p = DeserializerOfPackage().packageFromJsonString(
+        """{
   "meta": {
     "name": "foo",
     "aliases": [],
     "reference": "U",
     "datasheet": null,
     "footprint": null,
-    "physical": "LayoutOfPins.DUAL_INLINE_PACKAGE"
+    "physical": "DIP"
   },
   "pins": [
     {
@@ -182,3 +153,14 @@ def test_serializer():
   ]
 }"""
     )
+    assert p.name == "foo"
+    assert p.prefix == "U"
+    assert p.datasheet == None
+    assert len(p.aliases) == 0
+    assert p.footprintDesignator == None
+    assert p.layoutOfPins == LayoutOfPins.DUAL_INLINE_PACKAGE
+    assert len(p.ungroupedPins) == 5
+    assert len(p.groupedPins) == 2
+    assert_that_group_is_as_expected(p.groupedPins[0], "G1", 10, "Group 1","1 2 3")
+    assert_that_group_is_as_expected(p.groupedPins[1], "G2", 20, "Group 2","4 5 6 7 8")
+    assert " ".join([pn.designator.fullname for pn in p.ungroupedPins]) == "9 10 11 12 13"
