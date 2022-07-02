@@ -27,6 +27,12 @@ Content
 
 ### Release notes
 
+#### v0.0.3
+
+* The model of an electronic package is complete
+* A parser of datasheet written in Markdown format
+* A JSON format for serializing and deserializing.
+
 #### v0.0.2
 
 * The model of a group of pins is complete
