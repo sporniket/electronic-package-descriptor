@@ -21,12 +21,16 @@ from electronic_package_descriptor import *
 import pytest
 import json
 
-def assert_that_group_is_as_expected(g:GroupOfPins, designator:str, rank:int, comment: str, pins: str):
+
+def assert_that_group_is_as_expected(
+    g: GroupOfPins, designator: str, rank: int, comment: str, pins: str
+):
     assert g.designator == designator
     assert g.rank == rank
     assert g.comment == comment
     pinsDesgns = " ".join([p.designator.fullname for p in g.pins])
     assert pinsDesgns == pins
+
 
 def test_deserializer():
     p = DeserializerOfPackage().packageFromJsonString(
@@ -161,6 +165,8 @@ def test_deserializer():
     assert p.layoutOfPins == LayoutOfPins.DUAL_INLINE_PACKAGE
     assert len(p.ungroupedPins) == 5
     assert len(p.groupedPins) == 2
-    assert_that_group_is_as_expected(p.groupedPins[0], "G1", 10, "Group 1","1 2 3")
-    assert_that_group_is_as_expected(p.groupedPins[1], "G2", 20, "Group 2","4 5 6 7 8")
-    assert " ".join([pn.designator.fullname for pn in p.ungroupedPins]) == "9 10 11 12 13"
+    assert_that_group_is_as_expected(p.groupedPins[0], "G1", 10, "Group 1", "1 2 3")
+    assert_that_group_is_as_expected(p.groupedPins[1], "G2", 20, "Group 2", "4 5 6 7 8")
+    assert (
+        " ".join([pn.designator.fullname for pn in p.ungroupedPins]) == "9 10 11 12 13"
+    )

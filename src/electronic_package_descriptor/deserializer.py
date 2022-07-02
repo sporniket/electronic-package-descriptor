@@ -28,11 +28,16 @@ class DeserializerOfPackage:
         Deserialize a package from a JSON source compatible with ``json.loads()`` (i.e. a ``str``, ``bytes`` or
         ``bytearray`` instance containing a JSON document).
         """
-        jsn = json.loads(src)
+        return self.packageFromIntermediateTree(json.loads(src))
+
+    def packageFromIntermediateTree(self, tree: dict):
+        """
+        Instanciate a package from the tree structure that can be obtained by loading a JSON source.
+        """
         # step 1 : process pins
         pins = [
             PinDescription(p["designator"], p["name"], p["type"], p["description"])
-            for p in jsn["pins"]
+            for p in tree["pins"]
         ]
         # step 2 : process groups
         groups = [
@@ -42,14 +47,14 @@ class DeserializerOfPackage:
                 g["comment"],
                 [p for p in pins if p.designator.fullname in g["pins"]],
             )
-            for g in jsn["groups"]
+            for g in tree["groups"]
         ]
         groupedPins = []
         for g in groups:
             groupedPins += g.pins
         ungroupedPins = [p for p in pins if p not in groupedPins]
         # step 3 : process package
-        meta = jsn["meta"]
+        meta = tree["meta"]
         return PackageDescription(
             meta["name"],
             groups,

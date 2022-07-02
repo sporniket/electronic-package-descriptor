@@ -50,7 +50,10 @@ It also relies on the following package to enforce source formatting :
 
 see [README packaging](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-packaging.md) for further details.
 
-**Sporniket's electronic package descriptor** maintains a set of specifications for a JSON based format : see [README json](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-json.md)
+**Sporniket's electronic package descriptor** maintains a set of specifications :
+
+* A JSON based format : see [README json](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-json.md)
+* A Markdown based datasheet structure : see [README datasheet](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-datasheet.md)
 
 > Do not use **Sporniket's electronic package descriptor** if this project is not suitable for your project.
 
@@ -91,6 +94,7 @@ Supplemental documentation :
 
 * [README packaging](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-packaging.md) : some technical details about packaging this project.
 * [README json](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-json.md) : the specification of the JSON-based format.
+* [README datasheet](https://github.com/sporniket/electronic-package-descriptor/blob/main/README-datasheet.md) : the specification of the Markdown-based datasheet structure.
 
 ### Report issues
 Use the [project issues](https://github.com/sporniket/electronic-package-descriptor/issues) page.
