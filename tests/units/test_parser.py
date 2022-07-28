@@ -23,7 +23,7 @@ import json
 
 
 def test_parser():
-    srcLines = """# 74x04 Hex Inverter
+    srcLines = """# (Whatever) 16384-word × 8-bit, mask programmable ROM/eprom (or else)
 
     > This datasheet is marked with CC0 1.0
     > Universal. To view a copy of this license, visit
@@ -71,7 +71,7 @@ def test_parser():
         SerializerOfPackage().jsonFrom(p)
         == """{
   "meta": {
-    "name": "74x04_Hex_Inverter",
+    "name": "WHATEVER_16384-WORD_×_8-BIT_MASK_PROGRAMMABLE_ROM_EPROM_OR_ELSE",
     "aliases": [
       "7404",
       "74LS04"

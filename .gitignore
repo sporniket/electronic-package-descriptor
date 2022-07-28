@@ -2,6 +2,10 @@
 tmp.*
 # END OF Special for this project
 
+# VSCode stuff
+.vscode/
+# ----
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
