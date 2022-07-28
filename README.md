@@ -27,6 +27,10 @@ Content
 
 ### Release notes
 
+#### v0.0.4
+
+* Resolves #24 : [bug][parser] The name of the package should be uppercase and replace some non-alphanumeric characters by '_'
+
 #### v0.0.3
 
 * The model of an electronic package is complete
