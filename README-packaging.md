@@ -27,6 +27,12 @@ python3 -m pytest
 
 ## Publish on pypi
 
+Check list
+- [ ] Code complete and passing tests
+- [ ] setup.cfg has the right version
+- [ ] Readme up to date (MUST include release notes for the release to publish)
+- [ ] Tagged with git using matching version ('v' + version)
+
 Display the token so that a copy/paste is prepared. Then use the login `__token__`, and paste the token as the password.
 
 ```shell
