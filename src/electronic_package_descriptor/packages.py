@@ -41,6 +41,8 @@ class LayoutOfPins(Enum):
     BOARD_DUAL = "BRD"
     LEADED_CHIP_CARRIER = "LCC"
     QUAD_FLAT_PACKAGE = "QFP"
+    DUAL_INLINE_MODULE = "DIM"
+    SINGLE_INLINE_MODULE = "SIM"
 
 
 class PackageDescription:
