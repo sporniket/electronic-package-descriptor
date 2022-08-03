@@ -32,10 +32,11 @@ def compute_sequence_of_designators(pins: List[PinDescription]) -> str:
 
 
 def thenSublistShouldVerifyExpectations(
-    sublist: List[PinDescription], length: int, sequence: str
+    sublist: List[PinDescription], length: int, sequence: str = ""
 ) -> None:
     assert len(sublist) == length
-    assert compute_sequence_of_designators(sublist) == sequence
+    if length > 0:
+        assert compute_sequence_of_designators(sublist) == sequence
 
 
 def test_that_GroupOfPins_recognizes_ampop_io():
@@ -104,7 +105,7 @@ def test_that_GroupOfPins_recognizes_power():
     thenSublistShouldVerifyExpectations(g.slots["out"], 2, "3 5")
 
 
-def test_that_GroupOfPins_recognizes_bus():
+def test_that_GroupOfPins_recognizes_bus_bidirectionnal():
     g = GroupOfPins(
         "gut",
         10,
@@ -123,10 +124,51 @@ def test_that_GroupOfPins_recognizes_bus():
     assert g.rank == 10
     assert g.comment == "Group Under Test"
     assert len(g.pins) == 5
-    assert len(g.slots) == 4
-    thenSublistShouldVerifyExpectations(g.slots["in"], 3, "1 4 5")
-    thenSublistShouldVerifyExpectations(g.slots["out"], 1, "2")
-    thenSublistShouldVerifyExpectations(g.slots["bi"], 1, "3")
+    assert len(g.slots) == 1
+    thenSublistShouldVerifyExpectations(g.slots["bus"], 5, "3 4 5 2 1")
+
+def test_that_GroupOfPins_recognizes_bus_input():
+    g = GroupOfPins(
+        "gut",
+        10,
+        "Group Under Test",
+        [
+            PinDescription("1", "D0", "B", "Data bus"),
+            PinDescription("2", "D1", "O", "Data bus"),
+            PinDescription("3", "D4", "I", "Data bus"),
+            PinDescription("4", "D3", "I", "Data bus"),
+            PinDescription("5", "D2", "I", "Data bus"),
+        ],
+    )
+    assert g.pattern == PatternOfGroup.BUS
+    assert g.directionnality == Directionnality.IN
+    assert g.designator == "gut"
+    assert g.rank == 10
+    assert g.comment == "Group Under Test"
+    assert len(g.pins) == 5
+    assert len(g.slots) == 1
+    thenSublistShouldVerifyExpectations(g.slots["bus"], 5, "3 4 5 2 1")
+
+def test_that_GroupOfPins_recognizes_bus_output():
+    g = GroupOfPins(
+        "gut",
+        10,
+        "Group Under Test",
+        [
+            PinDescription("1", "D0", "B", "Data bus"),
+            PinDescription("2", "D1", "O", "Data bus"),
+            PinDescription("3", "D4", "O", "Data bus"),
+            PinDescription("4", "D3", "I", "Data bus"),
+            PinDescription("5", "D2", "I", "Data bus"),
+        ],
+    )
+    assert g.pattern == PatternOfGroup.BUS
+    assert g.directionnality == Directionnality.OUT
+    assert g.designator == "gut"
+    assert g.rank == 10
+    assert g.comment == "Group Under Test"
+    assert len(g.pins) == 5
+    assert len(g.slots) == 1
     thenSublistShouldVerifyExpectations(g.slots["bus"], 5, "3 4 5 2 1")
 
 
