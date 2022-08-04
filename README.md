@@ -27,6 +27,11 @@ Content
 
 ### Release notes
 
+#### v0.0.5
+
+* Resolves #26 : Supplemental pins layouts : DIM, SIM
+* Resolves #27 : Groups with bus pattern MUST have only 'bus' in slots
+
 #### v0.0.4
 
 * Resolves #24 : [bug][parser] The name of the package should be uppercase and replace some non-alphanumeric characters by '_'
