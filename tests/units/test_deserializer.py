@@ -170,3 +170,138 @@ def test_deserializer():
     assert (
         " ".join([pn.designator.fullname for pn in p.ungroupedPins]) == "9 10 11 12 13"
     )
+
+
+def test_deserializer_supports_missing_optionnal_fields():
+    p = DeserializerOfPackage().packageFromJsonString(
+        """{
+  "meta": {
+    "name": "foo"
+  },
+  "pins": [
+    {
+      "designator": "1",
+      "name": "D+",
+      "type": "I",
+      "description": "Non inverting input",
+      "group": "G1"
+    },
+    {
+      "designator": "2",
+      "name": "OUT",
+      "type": "O",
+      "description": "output",
+      "group": "G1"
+    },
+    {
+      "designator": "3",
+      "name": "D-",
+      "type": "I",
+      "description": "Inverting input",
+      "group": "G1"
+    },
+    {
+      "designator": "4",
+      "name": "D3",
+      "type": "I",
+      "description": "Data bus",
+      "group": "G2"
+    },
+    {
+      "designator": "5",
+      "name": "D2",
+      "type": "I",
+      "description": "Data bus",
+      "group": "G2"
+    },
+    {
+      "designator": "6",
+      "name": "D0",
+      "type": "I",
+      "description": "Data bus",
+      "group": "G2"
+    },
+    {
+      "designator": "7",
+      "name": "D1",
+      "type": "O",
+      "description": "Data bus",
+      "group": "G2"
+    },
+    {
+      "designator": "8",
+      "name": "D4",
+      "type": "B",
+      "description": "Data bus",
+      "group": "G2"
+    },
+    {
+      "designator": "9",
+      "name": "VCC",
+      "type": "PWR",
+      "description": "Power supply"
+    },
+    {
+      "designator": "10",
+      "name": "VCC",
+      "type": "PWR",
+      "description": "Power supply"
+    },
+    {
+      "designator": "11",
+      "name": "GNDA",
+      "type": "GND",
+      "description": "Ground for analog part"
+    },
+    {
+      "designator": "12",
+      "name": "VCCA",
+      "type": "PWR",
+      "description": "Power input for analog part"
+    },
+    {
+      "designator": "13",
+      "name": "GND",
+      "type": "GND",
+      "description": "Ground"
+    }
+  ],
+  "groups": [
+    {
+      "designator": "G1",
+      "rank": 10,
+      "comment": "Group 1",
+      "pins": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "designator": "G2",
+      "rank": 20,
+      "comment": "Group 2",
+      "pins": [
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ]
+    }
+  ]
+}"""
+    )
+    assert p.name == "foo"
+    assert p.prefix == "U"
+    assert p.datasheet == None
+    assert len(p.aliases) == 0
+    assert p.footprintDesignator == None
+    assert p.layoutOfPins == LayoutOfPins.DUAL_INLINE_PACKAGE
+    assert len(p.ungroupedPins) == 5
+    assert len(p.groupedPins) == 2
+    assert_that_group_is_as_expected(p.groupedPins[0], "G1", 10, "Group 1", "1 2 3")
+    assert_that_group_is_as_expected(p.groupedPins[1], "G2", 20, "Group 2", "4 5 6 7 8")
+    assert (
+        " ".join([pn.designator.fullname for pn in p.ungroupedPins]) == "9 10 11 12 13"
+    )
