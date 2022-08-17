@@ -5,11 +5,7 @@ _See https://packaging.python.org/en/latest/tutorials/packaging-projects/#genera
 ## Pre-checking
 
 ```shell
-python3 -m pip install --upgrade build
-python3 -m pip install --upgrade pytest
-python3 -m pip install --upgrade twine
-python3 -m pip install --upgrade black
-python3 -m pip install --upgrade coverage
+python3 -m pip install --upgrade build pytest twine black coverage
 ```
 
 ## Build and install locally
@@ -22,10 +18,12 @@ python3 -m build
 python3 -m pip install --force-reinstall dist/xxx.whl
 ```
 
-Run test suites with :
+Run test suites with coverage tracking and reporting :
 
 ```shell
-python3 -m pytest
+python3 -m coverage run --source=electronic_package_descriptor --branch -m pytest
+python3 -m coverage report -m
+python3 -m coverage html 
 ```
 
 ## Publish on pypi
