@@ -2,5 +2,8 @@
 # clean
 rm dist/*
 rm -Rf .pytest_cache
-# rebuild, install and test
-python3 -m build && python3 -m pip install --force-reinstall dist/*.whl && python3 -m pytest
+# rebuild, install and test with coverage
+python3 -m build && python3 -m pip install --force-reinstall dist/*.whl && \
+python3 -m coverage run --source=electronic_package_descriptor --branch -m pytest && \
+python3 -m coverage report -m && \
+python3 -m coverage html 
