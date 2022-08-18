@@ -27,6 +27,11 @@ Content
 
 ### Release notes
 
+#### v0.0.6
+
+* Resolves #29 : Deserializer should support missing optionnal fields in meta data
+* Narrow down supported python versions matrix : 3.8, 3.9, 3.10
+
 #### v0.0.5
 
 * Resolves #26 : Supplemental pins layouts : DIM, SIM
