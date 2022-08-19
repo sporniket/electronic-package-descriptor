@@ -151,12 +151,13 @@ class GroupOfPins:
         countOfBuses = len(buses)
         if countOfBuses + countOfPairs > 0:
             if countOfBuses == 1 and countOfPairs == 0:
-                self.pattern = PatternOfGroup.BUS
-                self.slots = {"bus": sorted(
-                    self.pins, key=lambda p: p.bus.rank, reverse=True
-                )}
-                self.directionnality = self.slots["bus"][0].directionnality
-                return
+                if len(self.pins) == len(buses[buses.keys().__iter__().__next__()]):
+                    self.pattern = PatternOfGroup.BUS
+                    self.slots = {
+                        "bus": sorted(self.pins, key=lambda p: p.bus.rank, reverse=True)
+                    }
+                    self.directionnality = self.slots["bus"][0].directionnality
+                    return
             elif countOfBuses == 0 and countOfPairs > 0:
                 if countOfPairs == 1:
                     thePair = pairs[next(iter(pairs))]

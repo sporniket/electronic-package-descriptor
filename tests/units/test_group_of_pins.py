@@ -127,6 +127,7 @@ def test_that_GroupOfPins_recognizes_bus_bidirectionnal():
     assert len(g.slots) == 1
     thenSublistShouldVerifyExpectations(g.slots["bus"], 5, "3 4 5 2 1")
 
+
 def test_that_GroupOfPins_recognizes_bus_input():
     g = GroupOfPins(
         "gut",
@@ -148,6 +149,7 @@ def test_that_GroupOfPins_recognizes_bus_input():
     assert len(g.pins) == 5
     assert len(g.slots) == 1
     thenSublistShouldVerifyExpectations(g.slots["bus"], 5, "3 4 5 2 1")
+
 
 def test_that_GroupOfPins_recognizes_bus_output():
     g = GroupOfPins(
@@ -178,10 +180,10 @@ def test_that_GroupOfPins_recognizes_nothing():
         10,
         "Group Under Test",
         [
-            PinDescription("1", "AS", "O", "Data bus"),
-            PinDescription("2", "DS", "O", "Data bus"),
-            PinDescription("3", "DTACK", "I", "Data bus"),
-            PinDescription("4", "R/W", "B", "Data bus"),
+            PinDescription("1", "AS", "O", "Address Strobe"),
+            PinDescription("2", "DS", "O", "Data Strobe"),
+            PinDescription("3", "DTACK", "I", "Data Transfer ACKnowledge"),
+            PinDescription("4", "R/W", "B", "Read/Write pin"),
             PinDescription("5", "TEST", "DNC", "Test pin"),
         ],
     )
@@ -196,3 +198,25 @@ def test_that_GroupOfPins_recognizes_nothing():
     thenSublistShouldVerifyExpectations(g.slots["out"], 2, "1 2")
     thenSublistShouldVerifyExpectations(g.slots["bi"], 1, "4")
     thenSublistShouldVerifyExpectations(g.slots["others"], 1, "5")
+
+
+def test_that_GroupOfPins_dont_fails_when_some_pins_are_forming_a_bus():
+    g = GroupOfPins(
+        "gut",
+        10,
+        "Group Under Test",
+        [
+            PinDescription("1", "A", "I", "A signal"),
+            PinDescription("2", "TST1", "O", "Test pin"),
+            PinDescription("3", "TST2", "O", "Test pin"),
+        ],
+    )
+    assert g.pattern == None
+    assert g.directionnality == Directionnality.BI
+    assert g.designator == "gut"
+    assert g.rank == 10
+    assert g.comment == "Group Under Test"
+    assert len(g.pins) == 3
+    assert len(g.slots) == 2
+    thenSublistShouldVerifyExpectations(g.slots["in"], 1, "1")
+    thenSublistShouldVerifyExpectations(g.slots["out"], 2, "2 3")
