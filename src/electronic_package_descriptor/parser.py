@@ -85,7 +85,7 @@ class LineHandlerForHeader(LineHandler):
         self.reDefinePhysical = re.compile("^pins[ ]+layout[ ]*\:.*", re.I)
         self.reSectionPinout = re.compile("^pinout", re.I)
 
-    def normalizeMetaName(self, name:str)->str:
+    def normalizeMetaName(self, name: str) -> str:
         norm = re.sub(r"[ ()_,/]+", "_", name)
         if norm[0] == "_":
             norm = norm[1:]

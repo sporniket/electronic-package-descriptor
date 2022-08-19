@@ -59,8 +59,10 @@ class DeserializerOfPackage:
             meta["name"],
             groups,
             ungroupedPins,
-            layoutOfPins=LayoutOfPins(meta["physical"]) if "physical" in meta else LayoutOfPins.DUAL_INLINE_PACKAGE,
-            prefix=meta["reference"] if "reference" in meta else 'U',
+            layoutOfPins=LayoutOfPins(meta["physical"])
+            if "physical" in meta
+            else LayoutOfPins.DUAL_INLINE_PACKAGE,
+            prefix=meta["reference"] if "reference" in meta else "U",
             datasheet=meta["datasheet"] if "datasheet" in meta else None,
             footprintDesignator=meta["footprint"] if "footprint" in meta else None,
             aliases=meta["aliases"] if "aliases" in meta else None,

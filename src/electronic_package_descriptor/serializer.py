@@ -74,4 +74,6 @@ class SerializerOfPackage:
         }
 
     def jsonFrom(self, package: PackageDescription) -> str:
-        return json.dumps(self.__convertPackage(package), indent=self.indent, ensure_ascii=False)
+        return json.dumps(
+            self.__convertPackage(package), indent=self.indent, ensure_ascii=False
+        )
