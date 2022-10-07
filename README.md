@@ -27,6 +27,10 @@ Content
 
 ### Release notes
 
+#### v0.0.7
+
+* Resolves #30 : [bug] a group having some pins recognized as bus hangs
+
 #### v0.0.6
 
 * Resolves #29 : Deserializer should support missing optionnal fields in meta data
